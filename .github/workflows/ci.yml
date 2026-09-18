@@ -46,7 +46,7 @@ jobs:
         run: .\scripts\build-windows.ps1
 
       - name: Upload verified package
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: netra-1.0.0-windows-x64
           path: |
