@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "targets": [
+    {
+      "address": "192.168.1.2",
+      "port": 161,
+      "timeout_ms": 2000,
+      "retries": 1,
+      "username": "netra-ro",
+      "auth_protocol": "SHA256",
+      "auth_passphrase_env": "NETRA_SNMP_SW_CORE_AUTH",
+      "privacy_protocol": "AES",
+      "privacy_passphrase_env": "NETRA_SNMP_SW_CORE_PRIV",
+      "context_name": ""
+    }
+  ]
+}

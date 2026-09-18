@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "observed_at": "2026-09-18T08:00:00Z",
+  "switches": [
+    {
+      "id": "sw-core",
+      "name": "SW-CORE",
+      "management_address": "192.168.1.2",
+      "macs": ["02:00:00:00:00:01"],
+      "roles": ["bridge"],
+      "lldp_neighbors": [
+        {
+          "local_port": "Gi1/0/17",
+          "remote_device_id": "sw-desk",
+          "remote_name": "SW-DESK",
+          "remote_port": "Uplink 1",
+          "remote_capabilities": ["bridge"]
+        }
+      ],
+      "fdb": [
+        {"mac": "aa:bb:cc:dd:ee:01", "port": "Gi1/0/17", "vlan": 20},
+        {"mac": "aa:bb:cc:dd:ee:02", "port": "Gi1/0/17", "vlan": 20},
+        {"mac": "aa:bb:cc:dd:ee:03", "port": "Gi1/0/17", "vlan": 20}
+      ]
+    },
+    {
+      "id": "sw-desk",
+      "name": "SW-DESK",
+      "management_address": "192.168.1.3",
+      "macs": ["02:00:00:00:00:02"],
+      "roles": ["bridge"],
+      "fdb": [
+        {"mac": "aa:bb:cc:dd:ee:01", "port": "Port 1", "vlan": 20},
+        {"mac": "aa:bb:cc:dd:ee:02", "port": "Port 2", "vlan": 20},
+        {"mac": "aa:bb:cc:dd:ee:03", "port": "Port 3", "vlan": 20}
+      ]
+    }
+  ]
+}
