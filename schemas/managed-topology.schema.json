@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netra.local/schemas/managed-topology.schema.json",
+  "title": "Netra managed topology evidence",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "switches"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "switches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "name": {"type": "string", "minLength": 1},
+          "management_address": {"type": "string"},
+          "macs": {"type": "array", "items": {"type": "string"}},
+          "roles": {"type": "array", "items": {"type": "string"}},
+          "lldp_neighbors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["local_port", "remote_device_id"],
+              "properties": {
+                "local_port": {"type": "string"},
+                "remote_device_id": {"type": "string"},
+                "remote_name": {"type": "string"},
+                "remote_port": {"type": "string"},
+                "remote_capabilities": {"type": "array", "items": {"type": "string"}}
+              }
+            }
+          },
+          "fdb": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mac", "port"],
+              "properties": {
+                "mac": {"type": "string"},
+                "port": {"type": "string"},
+                "vlan": {"type": "integer", "minimum": 1, "maximum": 4094}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

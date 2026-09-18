@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://netra.local/schemas/run-artifact.schema.json",
+  "title": "Netra run artifact 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "product_version", "run", "coverage", "assets", "relationships", "services", "findings"],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "product_version": { "type": "string", "minLength": 1 },
+    "run": {
+      "type": "object",
+      "required": ["id", "started_at", "completed_at", "mode", "scope", "exclude"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "started_at": { "type": "string", "format": "date-time" },
+        "completed_at": { "type": "string", "format": "date-time" },
+        "mode": { "enum": ["active", "passive"] },
+        "interface": { "type": "string" },
+        "scope": { "type": "array", "items": { "type": "string" } },
+        "exclude": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "required": ["attempted_ipv4", "responsive", "neighbor_cache", "managed_sources", "methods", "issues", "statement"],
+      "properties": {
+        "attempted_ipv4": { "type": "integer", "minimum": 0 },
+        "responsive": { "type": "integer", "minimum": 0 },
+        "neighbor_cache": { "type": "integer", "minimum": 0 },
+        "managed_sources": { "type": "integer", "minimum": 0 },
+        "methods": { "type": "array", "items": { "type": "string" } },
+        "issues": { "type": "array", "items": { "$ref": "#/$defs/coverage_issue" } },
+        "statement": { "type": "string" }
+      }
+    },
+    "assets": { "type": "array", "items": { "$ref": "#/$defs/asset" } },
+    "relationships": { "type": "array", "items": { "$ref": "#/$defs/relationship" } },
+    "services": { "type": "array", "items": { "$ref": "#/$defs/service" } },
+    "findings": { "type": "array" }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "required": ["source", "observed_at"],
+      "properties": {
+        "source": { "type": "string" },
+        "observed_at": { "type": "string", "format": "date-time" },
+        "observer": { "type": "string" },
+        "details": { "type": "object" }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "required": ["id", "kind"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "type": "string", "minLength": 1 },
+        "names": { "type": "array", "items": { "type": "string" } },
+        "addresses": { "type": "array", "items": { "type": "string" } },
+        "macs": { "type": "array", "items": { "type": "string" } },
+        "roles": { "type": "array", "items": { "type": "string" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "required": ["id", "type", "state", "from", "to", "evidence", "explanation"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "state": { "enum": ["observed", "inferred", "unknown", "contradictory"] },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "local_port": { "type": "string" },
+        "remote_port": { "type": "string" },
+        "vlan": { "type": "integer", "minimum": 0 },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+        "explanation": { "type": "string" }
+      }
+    },
+    "service": {
+      "type": "object",
+      "required": ["asset_id", "address", "port", "transport", "state", "observed_at"],
+      "properties": {
+        "asset_id": { "type": "string" },
+        "address": { "type": "string" },
+        "port": { "type": "integer", "minimum": 1, "maximum": 65535 },
+        "transport": { "const": "tcp" },
+        "state": { "const": "open" },
+        "observed_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "coverage_issue": {
+      "type": "object",
+      "required": ["source", "stage", "error"],
+      "properties": {
+        "source": { "type": "string" },
+        "target": { "type": "string" },
+        "stage": { "type": "string" },
+        "error": { "type": "string" }
+      }
+    }
+  }
+}
