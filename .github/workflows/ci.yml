@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-production-build:
+    name: Windows production build
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: engine/go.mod
+          cache-dependency-path: engine/go.sum
+
+      - name: Prepare development environment
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          .\.venv\Scripts\python -m pip install --upgrade pip
+          .\.venv\Scripts\python -m pip install -e ".[dev]"
+
+      - name: Build and verify Netra 1.0.0
+        shell: pwsh
+        run: .\scripts\build-windows.ps1
+
+      - name: Upload verified package
+        uses: actions/upload-artifact@v4
+        with:
+          name: netra-1.0.0-windows-x64
+          path: |
+            dist/netra-1.0.0-py3-none-win_amd64.whl
+            dist/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 7
