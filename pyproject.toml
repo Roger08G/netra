@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.27"]
+requires = ["hatchling>=1.32.0"]
 build-backend = "hatchling.build"
 
 [project]
@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "CLI local para el motor de descubrimiento y topología Netra"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["rich>=13.9,<15", "typer>=0.15,<1"]
+dependencies = ["rich>=15.0.0,<16", "typer>=0.27.2,<1"]
 keywords = ["network-discovery", "network-topology", "snmpv3", "cli"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -26,7 +26,7 @@ Issues = "https://github.com/Roger08G/netra/issues"
 Changelog = "https://github.com/Roger08G/netra/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
-dev = ["build>=1.2,<2", "jsonschema>=4.23,<5", "pytest>=8.3,<10"]
+dev = ["build>=1.6.1,<2", "jsonschema>=4.26.0,<5", "pytest>=9.1.1,<10"]
 
 [project.scripts]
 netra = "netra.cli:app"
