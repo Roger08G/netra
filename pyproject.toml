@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.32.0"]
+requires = ["hatchling>=1.32.4"]
 build-backend = "hatchling.build"
 
 [project]
@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "CLI local para el motor de descubrimiento y topología Netra"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["rich>=15.0.0,<16", "typer>=0.27.2,<1"]
+dependencies = ["rich>=15.0.0,<16", "typer>=0.27.3,<1"]
 keywords = ["network-discovery", "network-topology", "snmpv3", "cli"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
